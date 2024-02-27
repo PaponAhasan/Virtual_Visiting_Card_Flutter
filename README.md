@@ -1,16 +1,11 @@
-# virtual_visiting_card
+# VIRTUAL-VISITING-CARD
+TURN EVERY VISITING CARD INTO A GADGET
 
-A new Flutter project.
+![image](https://github.com/PaponAhasan/VIRTUAL-VISITING-CARD/assets/59710234/91838b48-1d39-4180-bbcb-4d9270687911) 
 
-## Getting Started
+Google's ML Kit - https://pub.dev/packages/google_ml_kit
 
-This project is a starting point for a Flutter application.
+Sqflite : https://pub.dev/packages/sqflite
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
