@@ -3,16 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:virtual_visiting_card/providers/contact_provider.dart';
 
 import '../models/contact.dart';
-
+import '../utils/helpers.dart';
 class FormPage extends StatefulWidget {
   static const String routeName = '/form';
-
   const FormPage({super.key});
-
   @override
   State<FormPage> createState() => _FormPageState();
 }
-
 class _FormPageState extends State<FormPage> {
   final nameController = TextEditingController();
   final mobileController = TextEditingController();
@@ -159,6 +156,7 @@ class _FormPageState extends State<FormPage> {
           .insertContact(contact)
           .then((rowId) {
         if (rowId > 0) {
+          showMessage(context, "Successfully added contact");
           Navigator.pop(context);
         }
       });

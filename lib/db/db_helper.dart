@@ -1,4 +1,4 @@
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 
 import '../models/contact.dart';
@@ -18,7 +18,7 @@ class DbHelper {
 
   Future<Database> _open() async {
     final root = await getDatabasesPath();
-    final dbPath = p.join(root, 'contact.db');
+    final dbPath = path.join(root, 'contact.db');
     return openDatabase(dbPath, version: 1, onCreate: (db, version) {
       db.execute(_createContactTable);
     });
@@ -36,14 +36,28 @@ class DbHelper {
         mapList.length, (index) => Contact.fromMap(mapList[index]));
   }
 
-  Future<int> updateFavorite(Contact contactModel) async {
+  Future<Contact> getSingleContacts(int id) async {
     final db = await _open();
-    return db.update(tableContact, contactModel.toMap(),
-        where: '$tblContactColId = ?', whereArgs: [contactModel.id]);
+    final mapList = await db
+        .query(tableContact, where: '$tblContactColId = ?', whereArgs: [id]);
+    return Contact.fromMap(mapList.first);
+  }
+
+  Future<int> updateFavorite(Contact contact) async {
+    final db = await _open();
+    return db.update(tableContact, contact.toMap(),
+        where: '$tblContactColId = ?', whereArgs: [contact.id]);
   }
 
   Future<int> deleteContact(int id) async {
     final db = await _open();
-    return db.delete(tableContact, where: '$tblContactColId = ?', whereArgs: [id]);
+    return db
+        .delete(tableContact, where: '$tblContactColId = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateContactField(int id, Map<String, dynamic> field) async {
+    final db = await _open();
+    return db.update(tableContact, field,
+        where: '$tblContactColId = ?', whereArgs: [id]);
   }
 }

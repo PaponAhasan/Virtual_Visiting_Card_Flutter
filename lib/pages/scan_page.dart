@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class ScanPage extends StatefulWidget {
   static const String routeName = '/scan';
   const ScanPage({super.key});
-
   @override
   State<ScanPage> createState() => _ScanPageState();
 }
