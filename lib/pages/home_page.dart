@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:virtual_visiting_card/models/contact.dart';
 import 'package:virtual_visiting_card/pages/contact_page.dart';
 import 'package:virtual_visiting_card/pages/form_page.dart';
+import 'package:virtual_visiting_card/pages/scan_page.dart';
 import 'package:virtual_visiting_card/utils/helpers.dart';
 
 import '../providers/contact_provider.dart';
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, FormPage.routeName);
+          Navigator.pushNamed(context, ScanPage.routeName);
         },
         shape: const CircleBorder(),
         backgroundColor: Colors.green,

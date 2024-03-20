@@ -4,6 +4,7 @@ import 'package:virtual_visiting_card/providers/contact_provider.dart';
 
 import '../models/contact.dart';
 import '../utils/helpers.dart';
+import 'home_page.dart';
 class FormPage extends StatefulWidget {
   static const String routeName = '/form';
   const FormPage({super.key});
@@ -19,6 +20,20 @@ class _FormPageState extends State<FormPage> {
   final addressController = TextEditingController();
   final websiteController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  late Contact contactModel;
+
+  @override
+  void didChangeDependencies() {
+    contactModel = ModalRoute.of(context)!.settings.arguments as Contact;
+    nameController.text = contactModel.name;
+    mobileController.text = contactModel.mobile;
+    emailController.text = contactModel.email;
+    designationController.text = contactModel.designation;
+    companyController.text = contactModel.company;
+    addressController.text = contactModel.address;
+    websiteController.text = contactModel.website;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +164,8 @@ class _FormPageState extends State<FormPage> {
           address: addressController.text,
           company: companyController.text,
           designation: designationController.text,
-          website: websiteController.text
+          website: websiteController.text,
+          image: contactModel.image
       );
 
       Provider.of<ContactProvider>(context, listen: false)
@@ -157,7 +173,8 @@ class _FormPageState extends State<FormPage> {
           .then((rowId) {
         if (rowId > 0) {
           showMessage(context, "Successfully added contact");
-          Navigator.pop(context);
+          //Navigator.pop(context);
+          Navigator.popUntil(context, ModalRoute.withName(HomePage.routeName));
         }
       });
     }

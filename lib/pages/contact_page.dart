@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -36,17 +39,20 @@ class _ContactPageState extends State<ContactPage> {
               if (snapshot.hasData) {
                 contact = snapshot.data!;
                 return ListView(children: [
-                  Image.asset(
-                    contact.image,
-                    width: double.infinity,
+                  Image.file(File(contact.image), width: double.infinity,
                     height: 250,
-                    fit: BoxFit.fitWidth,
-                  ),
+                    fit: BoxFit.fitWidth,),
+                  // Image.asset(
+                  //   contact.image,
+                  //   width: double.infinity,
+                  //   height: 250,
+                  //   fit: BoxFit.fitWidth,
+                  // ),
                   ListTile(
                     title: Text(contact.name),
                   ),
                   ListTile(
-                    title: Text(contact.email),
+                    title: Text(contact.mobile),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -66,9 +72,8 @@ class _ContactPageState extends State<ContactPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(contact.email.isEmpty
-                        ? "not found"
-                        : contact.email),
+                    title: Text(
+                        contact.email.isEmpty ? "not found" : contact.email),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -145,9 +150,38 @@ class _ContactPageState extends State<ContactPage> {
     }
   }
 
-  void _emailContact(String email) async {}
+  void _emailContact(String email) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      queryParameters: {
+        'subject': "subject",
+        'body': "body",
+      },
+    );
+    final String url = emailUri.toString();
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
-  void _openMap(String address) async {}
+  void _openMap(String address) async {
+    final url = 'https://www.google.com/maps/search/?api=1&query=$address';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
-  void _openBrowser(String address) async {}
+  void _openBrowser(String website) async {
+    final url = website;
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

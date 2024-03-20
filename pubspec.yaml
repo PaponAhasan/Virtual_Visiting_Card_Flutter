@@ -41,6 +41,7 @@ dependencies:
   url_launcher:
   image_picker:
   google_mlkit_text_recognition:
+  flutter_easyloading:
 
 dev_dependencies:
   flutter_test:
