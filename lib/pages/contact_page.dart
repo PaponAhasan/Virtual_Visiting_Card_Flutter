@@ -1,9 +1,9 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:virtual_visiting_card/utils/helpers.dart';
 
 import '../models/contact.dart';
 import '../providers/contact_provider.dart';
@@ -39,9 +39,12 @@ class _ContactPageState extends State<ContactPage> {
               if (snapshot.hasData) {
                 contact = snapshot.data!;
                 return ListView(children: [
-                  Image.file(File(contact.image), width: double.infinity,
+                  Image.file(
+                    File(contact.image),
+                    width: double.infinity,
                     height: 250,
-                    fit: BoxFit.fitWidth,),
+                    fit: BoxFit.fitWidth,
+                  ),
                   // Image.asset(
                   //   contact.image,
                   //   width: double.infinity,
@@ -137,6 +140,7 @@ class _ContactPageState extends State<ContactPage> {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
+      showMessage(context, "can't send message");
       throw 'Could not launch $url';
     }
   }
@@ -146,6 +150,7 @@ class _ContactPageState extends State<ContactPage> {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
+      showMessage(context, "can't call");
       throw 'Could not launch $url';
     }
   }
@@ -160,27 +165,43 @@ class _ContactPageState extends State<ContactPage> {
       },
     );
     final String url = emailUri.toString();
+    //final String url ='mailto:$email';
+    //final String url ='mailto:$email?subject=subject&body=body';
+
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
+      showMessage(context, "can't send email");
       throw 'Could not launch $url';
     }
   }
 
   void _openMap(String address) async {
-    final url = 'https://www.google.com/maps/search/?api=1&query=$address';
+    //final url = 'https://www.google.com/maps/search/?api=1&query=$address';
+    String url = '';
+    if (Platform.isAndroid) {
+      url = 'geo:0,0?q=$address';
+      //url = 'geo:0,0?q=${Uri.encodeComponent(address)}';
+    } else if (Platform.isIOS) {
+      //url = 'https://maps.apple.com/?q=$address';
+      url = 'https://maps.apple.com/?q=${Uri.encodeComponent(address)}';
+    }
+
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
+      showMessage(context, "can't open map");
       throw 'Could not launch $url';
     }
   }
 
   void _openBrowser(String website) async {
     final url = website;
+    //final url = 'https://$website';
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
+      showMessage(context, "can't open browser");
       throw 'Could not launch $url';
     }
   }

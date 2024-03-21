@@ -8,6 +8,7 @@ class DbHelper {
   $tblContactColId integer primary key autoincrement,
   $tblContactColName text,
   $tblContactColMobile text,
+  $tblContactColLandline text,
   $tblContactColEmail text,
   $tblContactColAddress text,
   $tblContactColCompany text,
@@ -19,8 +20,12 @@ class DbHelper {
   Future<Database> _open() async {
     final root = await getDatabasesPath();
     final dbPath = path.join(root, 'contact.db');
-    return openDatabase(dbPath, version: 1, onCreate: (db, version) {
+    return openDatabase(dbPath, version: 2, onCreate: (db, version) {
       db.execute(_createContactTable);
+    }, onUpgrade: (db, oldVersion, newVersion) {
+      if (oldVersion == 1 && newVersion == 2) {
+        db.execute('alter table $tableContact add column $tblContactColLandline text default ""');
+      }
     });
   }
 

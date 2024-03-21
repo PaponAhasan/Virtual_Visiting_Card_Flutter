@@ -7,6 +7,8 @@
       <string>sms</string>
       <string>tel</string>
       <string>mailto</string>
+      <string>http</string>
+      <string>https</string>
     </array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your photo library </string>

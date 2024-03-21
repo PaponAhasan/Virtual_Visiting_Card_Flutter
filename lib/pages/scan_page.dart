@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:virtual_visiting_card/models/contact.dart';
 
 import '../utils/constants.dart';
+import '../utils/helpers.dart';
 import 'form_page.dart';
 
 class ScanPage extends StatefulWidget {
@@ -102,7 +102,7 @@ class _ScanPageState extends State<ScanPage> {
     final xFile = await ImagePicker().pickImage(source: source);
 
     if (xFile != null) {
-      _showDefaultLoading();
+      showDefaultLoading();
 
       image = xFile.path;
       final textRecognizer =
@@ -118,7 +118,7 @@ class _ScanPageState extends State<ScanPage> {
       setState(() {
         lines = tempLines;
         isScanOver = true;
-        _showSuccess();
+        showSuccess();
       });
     }
   }
@@ -261,12 +261,4 @@ class _DropTargetItemState extends State<DropTargetItem> {
   }
 }
 
-// Show default loading with a status message
-void _showDefaultLoading() {
-  EasyLoading.show(status: 'Loading...');
-}
 
-void _showSuccess() {
-  EasyLoading.showSuccess('Loaded successfully!');
-  EasyLoading.dismiss();
-}

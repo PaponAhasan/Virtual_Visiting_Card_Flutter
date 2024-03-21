@@ -17,6 +17,7 @@ class ContactProvider extends ChangeNotifier {
 
   Future<void> getAllContacts() async {
     contactList = await db.getAllContacts();
+    print(contactList);
     notifyListeners();
   }
 
